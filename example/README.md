@@ -64,3 +64,24 @@ app.post('/upload', function(req, res) {
 });
 ```
 
+## Multi-File Upload with single input field
+```html
+<input type="file" name='filename' multiple>
+```
+
+all files will upload like so:
+```javascript
+app.post('/', function(req, res){
+    if(req.files){
+        var file = req.files.filename;
+        for(var i = 0 ; i < file.length; i++){
+            file[i].mv('./upload/'+file[i].name, function(err){
+                if(err){
+                    res.send(err);
+                }
+            })
+            
+        }
+        res.send('done');
+    }
+})
